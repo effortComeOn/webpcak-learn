@@ -3,10 +3,12 @@ bin-debug/
 bin-release/
 [Oo]bj/
 [Bb]in/
+node_modules/
+dist/
 
 # Other files and folders
 .settings/
-
+package-lock.json
 # Executables
 *.swf
 *.air
