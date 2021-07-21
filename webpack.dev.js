@@ -1,14 +1,54 @@
 "use strict";
 
+const glob = require("glob");
 const path = require("path");
 const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+// 多页面应用打包通用方案
+const setMPA = () => {
+  const entry = {};
+  const htmlWebpackPlugin = [];
+
+  // 动态获取 src 目录下的文件。常见的按文件夹划分
+  const entryFiles = glob.sync(path.join(__dirname, "./src/*/index.js"));
+  Object.keys(entryFiles).map((index) => {
+    const entryFile = entryFiles[index];
+    // 获取文件名
+    const match = entryFile.match(/src\/(.*)\/index.js/);
+    const pageName = match && match[1];
+    // 动态添加entry
+    entry[pageName] = entryFile;
+    // 动态添加 htmlWebpackPlugin
+    htmlWebpackPlugin.push(
+      new HtmlWebpackPlugin({
+        template: path.join(__dirname, `src/${pageName}/index.html`),
+        filename: `${pageName}.html`,
+        chunks: [pageName],
+        inject: true,
+        minify: {
+          html5: true,
+          collapseWhitespace: true,
+          preserveLineBreaks: false,
+          minifyCSS: true,
+          removeComments: false,
+        },
+      })
+    );
+  });
+
+  return {
+    entry,
+    htmlWebpackPlugin,
+  };
+};
+
+const { entry, htmlWebpackPlugin } = setMPA();
+
 
 module.exports = {
   mode: "development",
-  entry: {
-    index: "./src/index.js",
-    search: "./src/search.js",
-  },
+  entry: entry,
   output: {
     path: path.join(__dirname, "dist "),
     filename: "[name].js",
@@ -46,9 +86,10 @@ module.exports = {
       },
     ],
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()], // 热更新
+  plugins: [new webpack.HotModuleReplacementPlugin()].concat(htmlWebpackPlugin), // 热更新
   devServer: {
     contentBase: "./dist",
     hot: true,
   },
+  devtool: "source-map"
 };

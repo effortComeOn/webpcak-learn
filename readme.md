@@ -100,6 +100,80 @@ package.json 中
 使用 row-loader 内联 html 和 js
 
 css 内联
+
 - 借助 style-loader
 - html-inline-css-webpack-plugin
 
+#### source map
+
+使用 devtool 配置，不同的配置，打包后是不同的形式。
+
+- eval: 使用 eval 包裹模块代码
+- source map： 产生 .map 文件
+- cheap: 不包含列信息
+- inline: 将 .map 作为 DataURI 嵌入，不单独生成 .map 文件
+- module: 包含 loader 的 sourcemap
+
+#### 基础库分离
+
+方法 1:
+
+- 思路： 将 react、react-dom 基础包通过 cdn 引入，不打入 bundle 中
+- 方法： 使用 html-webpack-externals-plugin
+
+```js
+new HtmlWebpackExternalsPlugin({
+  externals: [
+    {
+      module: "react",
+      entry: "https://unpkg.com/react@17/umd/react.development.js",
+      global: "React",
+    },
+    {
+      module: "react-dom",
+      entry: "https://unpkg.com/react-dom@17/umd/react-dom.development.js",
+      global: "ReactDOM",
+    },
+  ],
+});
+```
+
+方法 2:
+
+利用 SplitChunksPlugin 进行公共脚本分离
+
+webpack 4 内置的， 替代 CommonsChunkPlugin 插件。chunks 参数说明：
+
+- async 异步引入的库进行分离（默认）
+- initial 同步引入库进行分离
+- all 所有引入的库进行分离 （推荐）
+
+```js
+optimization: {
+    // 代码分割
+    splitChunks: {
+        cacheGroups: {
+            commons: {
+                test: /(react|react-dom)/,
+                name: "vendors",
+                chunks: "all",
+            },
+        },
+    },
+},
+```
+
+提取公共文件：
+
+```js
+splitChunks: {
+    minSize: 0,
+    cacheGroups: {
+        commons: {
+            name: "commons",
+            chunks: "all",
+            minChunks: 1,
+        },
+    },
+},
+```

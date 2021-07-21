@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackExternalsPlugin = require("html-webpack-externals-plugin");
 
 // 多页面应用打包通用方案
 const setMPA = () => {
@@ -25,7 +26,7 @@ const setMPA = () => {
       new HtmlWebpackPlugin({
         template: path.join(__dirname, `src/${pageName}/index.html`),
         filename: `${pageName}.html`,
-        chunks: [pageName],
+        chunks: ["venders", pageName],
         inject: true,
         minify: {
           html5: true,
@@ -125,6 +126,21 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name]_[contenthash:8].css",
     }),
+    // 提取公共模块
+    // new HtmlWebpackExternalsPlugin({
+    //   externals: [
+    //     {
+    //       module: 'react',
+    //       entry: 'https://unpkg.com/react@17/umd/react.development.js',
+    //       global: 'React',
+    //     },
+    //     {
+    //       module: 'react-dom',
+    //       entry: 'https://unpkg.com/react-dom@17/umd/react-dom.development.js',
+    //       global: 'ReactDOM',
+    //     },
+    //   ],
+    // })
 
     // webpack 4
     // new OptimizeCssAssetsPlugin({
@@ -153,5 +169,29 @@ module.exports = {
       // `...`,
       new CssMinimizerPlugin(),
     ],
+
+    // 提取公共模块
+    // splitChunks: {
+    //   cacheGroups: {
+    //     // 提取公共模块为 vendors
+    //     commons: {
+    //       test: /(react|react-dom)/,
+    //       name: "vendors",
+    //       chunks: "all",
+    //     },
+    //   },
+    // },
+
+    // 提取公共文件
+    splitChunks: {
+      minSize: 0,
+      cacheGroups: {
+        commons: {
+          name: "commons",
+          chunks: "all",
+          minChunks: 1,
+        },
+      },
+    },
   },
 };
