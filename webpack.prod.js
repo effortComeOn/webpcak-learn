@@ -57,6 +57,10 @@ module.exports = {
   },
   module: {
     rules: [
+      // {
+      //   test: /.js$/,
+      //   use: "eslint-loader", //转换es6
+      // },
       {
         test: /.js$/,
         use: "babel-loader", //转换es6
@@ -183,15 +187,15 @@ module.exports = {
     // },
 
     // 提取公共文件
-    splitChunks: {
-      minSize: 0,
-      cacheGroups: {
-        commons: {
-          name: "commons",
-          chunks: "all",
-          minChunks: 1,
-        },
-      },
-    },
+    // splitChunks: {
+    //   minSize: 0,
+    //   cacheGroups: {
+    //     commons: {
+    //       name: "commons",
+    //       chunks: "all",
+    //       minChunks: 1,
+    //     },
+    //   },
+    // },
   },
 };

@@ -177,3 +177,59 @@ splitChunks: {
     },
 },
 ```
+
+#### tree shaking
+
+##### 概念
+
+一个模块可能有多个方法，只要其中某个方法被使用，则整个文件都会被打包到 bundle 中去， tree shaking 就是只把用到的方法打入到 bundle，没用到的方法会在 uglify 阶段被擦除。
+
+##### 使用
+
+webpack 默认支持，在 .babelrc 里设置 modules: false
+
+mode 为 production 时， 默认开启 tree shaking
+
+##### 要求
+
+必须是 ES6 的语法，CJS 的方式不支持。
+
+##### DCE （Elimination）
+
+- 代码不会被执行，不可到达
+- 代码执行结果不会被用到
+- 代码只会影响死变量 （只写不读）
+
+##### tree-shaking 的原理
+
+1. 利用 ES6 模块的特点
+
+   - 只能作为模块顶层的语句出现
+   - import 的模块名只能是字符串常量
+   - import binding 是 immutable 的
+
+2. 代码擦除
+   - uglify 阶段删除无用代码
+
+#### ScopeHoisting 使用和原理分析
+
+原理： 将所有模块的代码按照引用顺序放在一个函数作用域里，然后适当的重命名一些变量以防止变量名冲突。
+
+结合 webpack 打包后的文件来分析
+
+不开启 ScopeHoisting 时，构建后的代码存在大量闭包，会存在一些问题
+
+- 大量函数闭包包裹代码，导致代码体积增大（模块越多越明显）
+- 运行代码时创建的函数作用域变多，内存开销变大
+
+而通过 scope hoisting 可以减少函数生命代码和内存开销
+
+mode 为 production 时，默认开启。必须是 ES6 语法；CJS 不支持,如果动态引入模块时，无法静态分析模块。
+
+手动开启方式：
+
+```js
+{
+  plugins: [new webpack.optimize.ModuleConcatenationPlugin()];
+}
+```
