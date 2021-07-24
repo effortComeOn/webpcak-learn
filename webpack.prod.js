@@ -51,7 +51,7 @@ module.exports = {
   mode: "production",
   entry: entry,
   output: {
-    path: path.join(__dirname, "dist "),
+    path: path.join(__dirname, "dist"),
     filename: "[name]_[chunkhash:8].js",
     clean: true, // webpack 5,配置此参数，可直接清除打包的 dist 目录，无需使用 clean-webpack-plugin
   },

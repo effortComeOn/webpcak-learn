@@ -50,7 +50,7 @@ module.exports = {
   mode: "development",
   entry: entry,
   output: {
-    path: path.join(__dirname, "dist "),
+    path: path.join(__dirname, "dist"),
     filename: "[name].js",
     clean: true,
   },
