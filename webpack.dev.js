@@ -45,7 +45,6 @@ const setMPA = () => {
 
 const { entry, htmlWebpackPlugin } = setMPA();
 
-
 module.exports = {
   mode: "development",
   entry: entry,
@@ -90,6 +89,7 @@ module.exports = {
   devServer: {
     contentBase: "./dist",
     hot: true,
+    stats: "error-only",
   },
-  devtool: "source-map"
+  devtool: "source-map",
 };

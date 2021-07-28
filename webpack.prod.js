@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlWebpackExternalsPlugin = require("html-webpack-externals-plugin");
+const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 
 // 多页面应用打包通用方案
 const setMPA = () => {
@@ -130,6 +131,19 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name]_[contenthash:8].css",
     }),
+    new FriendlyErrorsPlugin(),
+    function statusErrorFun() {
+      this.hooks.done.tap('done', (stats) => {
+        if (
+          stats.compilation.errors
+          && stats.compilation.errors.length
+          && process.argv.indexOf('--watch') === -1
+        ) {
+          //   console.log("build error");
+          process.exit(1);
+        }
+      });
+    },
     // 提取公共模块
     // new HtmlWebpackExternalsPlugin({
     //   externals: [
@@ -167,35 +181,36 @@ module.exports = {
     //   },
     // }),
   ].concat(htmlWebpackPlugin),
-  optimization: {
-    minimizer: [
-      // 在 webpack@5 中，你可以使用 `...` 语法来扩展现有的 minimizer（即 `terser-webpack-plugin`），将下一行取消注释
-      // `...`,
-      new CssMinimizerPlugin(),
-    ],
+  stats: "error-only",
+  // optimization: {
+  //   minimizer: [
+  //     // 在 webpack@5 中，你可以使用 `...` 语法来扩展现有的 minimizer（即 `terser-webpack-plugin`），将下一行取消注释
+  //     // `...`,
+  //     new CssMinimizerPlugin(),
+  //   ],
 
-    // 提取公共模块
-    // splitChunks: {
-    //   cacheGroups: {
-    //     // 提取公共模块为 vendors
-    //     commons: {
-    //       test: /(react|react-dom)/,
-    //       name: "vendors",
-    //       chunks: "all",
-    //     },
-    //   },
-    // },
+  //   // 提取公共模块
+  //   // splitChunks: {
+  //   //   cacheGroups: {
+  //   //     // 提取公共模块为 vendors
+  //   //     commons: {
+  //   //       test: /(react|react-dom)/,
+  //   //       name: "vendors",
+  //   //       chunks: "all",
+  //   //     },
+  //   //   },
+  //   // },
 
-    // 提取公共文件
-    // splitChunks: {
-    //   minSize: 0,
-    //   cacheGroups: {
-    //     commons: {
-    //       name: "commons",
-    //       chunks: "all",
-    //       minChunks: 1,
-    //     },
-    //   },
-    // },
-  },
+  //   // 提取公共文件
+  //   // splitChunks: {
+  //   //   minSize: 0,
+  //   //   cacheGroups: {
+  //   //     commons: {
+  //   //       name: "commons",
+  //   //       chunks: "all",
+  //   //       minChunks: 1,
+  //   //     },
+  //   //   },
+  //   // },
+  // },
 };
