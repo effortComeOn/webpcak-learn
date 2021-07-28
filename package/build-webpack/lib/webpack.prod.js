@@ -1,23 +1,23 @@
-const merge = require("webpack-merge");
-const baseConfig = require("./webpack.base");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const HtmlWebpackExternalsPlugin = require("html-webpack-externals-plugin");
+const merge = require('webpack-merge');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
+const baseConfig = require('./webpack.base');
 
 const prodConfig = {
-  mode: "production",
+  mode: 'production',
   plugins: [
     // 提取公共模块
     new HtmlWebpackExternalsPlugin({
       externals: [
         {
-          module: "react",
-          entry: "https://unpkg.com/react@17/umd/react.development.js",
-          global: "React",
+          module: 'react',
+          entry: 'https://unpkg.com/react@17/umd/react.development.js',
+          global: 'React',
         },
         {
-          module: "react-dom",
-          entry: "https://unpkg.com/react-dom@17/umd/react-dom.development.js",
-          global: "ReactDOM",
+          module: 'react-dom',
+          entry: 'https://unpkg.com/react-dom@17/umd/react-dom.development.js',
+          global: 'ReactDOM',
         },
       ],
     }),
@@ -34,8 +34,8 @@ const prodConfig = {
       minSize: 0,
       cacheGroups: {
         commons: {
-          name: "commons",
-          chunks: "all",
+          name: 'commons',
+          chunks: 'all',
           minChunks: 2,
         },
       },
