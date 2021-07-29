@@ -1,0 +1,72 @@
+{
+  "name": "webpcak-learn",
+  "version": "1.0.0",
+  "description": "- 基础篇：掌握webpack 的核心概念和开发必备技巧 - 进阶篇： 编写webpack的构建配置并掌握优化策略 - 原理篇： 剖析内部运行原理并编写自定义Loader和插件 - 实战篇： 通过webpack 商城项目实战牢固掌握所学知识",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.prod.js",
+    "watch": "webpack --watch",
+    "dev": "webpack serve --open --config webpack.dev.js",
+    "build:ssr": "webpack --config webpack.ssr.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/effortComeOn/webpcak-learn.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/effortComeOn/webpcak-learn/issues"
+  },
+  "homepage": "https://github.com/effortComeOn/webpcak-learn#readme",
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-react": "^7.14.5",
+    "autoprefixer": "^10.3.1",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "css-loader": "^6.1.0",
+    "css-minimizer-webpack-plugin": "^3.0.2",
+    "cssnano": "^5.0.6",
+    "eslint": "^7.31.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.24.0",
+    "express": "^4.17.1",
+    "file-loader": "^6.2.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "glob": "^7.1.7",
+    "html-webpack-externals-plugin": "^3.8.0",
+    "html-webpack-plugin": "^5.3.2",
+    "large-number": "^1.0.1",
+    "less": "^4.1.1",
+    "less-loader": "^10.0.1",
+    "mini-css-extract-plugin": "^2.1.0",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "postcss-loader": "^6.1.1",
+    "postcss-preset-env": "^6.7.0",
+    "px2rem-loader": "^0.1.9",
+    "raw-loader": "^0.5.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "style-loader": "^3.1.0",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.45.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "ios 7"
+  ],
+  "dependencies": {
+    "lib-flexible": "^0.3.2"
+  }
+}

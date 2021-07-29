@@ -1,0 +1,11 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env" // es6
+    ],
+    "@babel/preset-react" //转换react
+  ],
+  "plugins": [
+      "@babel/plugin-syntax-dynamic-import"
+  ]
+}

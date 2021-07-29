@@ -5,4 +5,11 @@ module.exports = {
     browser: true,
     node: true,
   },
+  rules: {
+    semi: ['error', 'always'],
+    quotes: ['error', 'single'],
+    'no-undef': 0,
+    'comma-dangle': 0,
+    'no-console': 0,
+  },
 };

@@ -4,13 +4,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const projectRoot = process.cwd();
+
 // 多页面应用打包通用方案
 const setMPA = () => {
   const entry = {};
   const htmlWebpackPlugin = [];
 
   // 动态获取 src 目录下的文件。常见的按文件夹划分
-  const entryFiles = glob.sync(path.join(__dirname, './src/*/index.js'));
+  const entryFiles = glob.sync(path.join(projectRoot, './src/*/index.js'));
   Object.keys(entryFiles).map((index) => {
     const entryFile = entryFiles[index];
     // 获取文件名
@@ -21,7 +23,7 @@ const setMPA = () => {
     // 动态添加 htmlWebpackPlugin
     return htmlWebpackPlugin.push(
       new HtmlWebpackPlugin({
-        template: path.join(__dirname, `src/${pageName}/index.html`),
+        template: path.join(projectRoot, `src/${pageName}/index.html`),
         filename: `${pageName}.html`,
         chunks: ['venders', pageName],
         inject: true,
