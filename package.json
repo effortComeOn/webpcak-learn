@@ -8,7 +8,9 @@
     "build": "webpack --config webpack.prod.js",
     "watch": "webpack --watch",
     "dev": "webpack serve --open --config webpack.dev.js",
-    "build:ssr": "webpack --config webpack.ssr.js"
+    "build:ssr": "webpack --config webpack.ssr.js",
+    "build:stats": "webpack --config webpack.prod.js --json > stats.json ",
+    "dll": "webpack --config webpack.dll.js"
   },
   "repository": {
     "type": "git",
@@ -44,6 +46,7 @@
     "glob": "^7.1.7",
     "html-webpack-externals-plugin": "^3.8.0",
     "html-webpack-plugin": "^5.3.2",
+    "image-webpack-loader": "^7.0.1",
     "large-number": "^1.0.1",
     "less": "^4.1.1",
     "less-loader": "^10.0.1",
@@ -55,9 +58,13 @@
     "raw-loader": "^0.5.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "speed-measure-webpack-plugin": "^1.5.0",
     "style-loader": "^3.1.0",
+    "terser-webpack-plugin": "^5.1.4",
+    "thread-loader": "^3.0.4",
     "url-loader": "^4.1.1",
     "webpack": "^5.45.1",
+    "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2"
   },
